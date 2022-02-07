@@ -14,37 +14,46 @@ pub struct MarineBuilder {
     hp: i16,
 }
 
-impl MarineBuilder {
-    pub fn new() -> MarineBuilder {
+pub trait BuilderTrait {
+    fn new() -> MarineBuilder;
+    fn set_name(&mut self, name: String) -> &mut MarineBuilder;
+    fn set_attack(&mut self, attack: i16) -> &mut MarineBuilder;
+    fn set_armor(&mut self, armor: i16) -> &mut MarineBuilder;
+    fn set_hp(&mut self, hp: i16) -> &mut MarineBuilder;
+    fn build(&self) -> Marine;
+}
+
+impl BuilderTrait for MarineBuilder {
+    fn new() -> MarineBuilder {
         MarineBuilder {
-            name: String::from("Marine"),
+            name: String::from(""),
             attack: 0,
             armor: 0,
             hp: 0,
         }
     }
 
-    pub fn set_name(&mut self, name: String) -> &mut MarineBuilder {
+    fn set_name(&mut self, name: String) -> &mut MarineBuilder {
         self.name = name;
         self
     }
 
-    pub fn set_attack(&mut self, attack: i16) -> &mut MarineBuilder {
+    fn set_attack(&mut self, attack: i16) -> &mut MarineBuilder {
         self.attack = attack;
         self
     }
 
-    pub fn set_armor(&mut self, armor: i16) -> &mut MarineBuilder {
+    fn set_armor(&mut self, armor: i16) -> &mut MarineBuilder {
         self.armor = armor;
         self
     }
 
-    pub fn set_hp(&mut self, hp: i16) -> &mut MarineBuilder {
+    fn set_hp(&mut self, hp: i16) -> &mut MarineBuilder {
         self.hp = hp;
         self
     }
 
-    pub fn build(&self) -> Marine {
+    fn build(&self) -> Marine {
         Marine {
             name: self.name.clone(),
             attack: self.attack,
