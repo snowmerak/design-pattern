@@ -134,7 +134,7 @@ impl Bootcamp for Factory {
 pub fn build_bootcamp(name: &str) -> Result<impl Bootcamp, String> {
     match name {
         "barracks" => Ok(Barrack {}),
-        "factory" => Ok(Factory {}),
+        // "factory" => Ok(Factory {}),
         _ => Err("Unknown bootcamp".to_string()),
     }
 }
