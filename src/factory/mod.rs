@@ -1,12 +1,42 @@
 
 pub struct Mechanic {
-    pub name: String,
-    pub hp: i16,
-    pub armor: i16,
-    pub attack: i16,
+    name: String,
+    hp: i16,
+    armor: i16,
+    attack: i16,
 }
 
-pub fn train(name: &str) -> Result<Mechanic, String> {
+pub trait Terran {
+    fn get_name(&self) -> String;
+    fn get_hp(&self) -> i16;
+    fn get_armor(&self) -> i16;
+    fn get_attack(&self) -> i16;
+    fn decrease_hp(&mut self, attack: i16);
+}
+
+impl Terran for Mechanic {
+    fn get_name(&self) -> String {
+        self.name.clone()
+    }
+
+    fn get_hp(&self) -> i16 {
+        self.hp
+    }
+
+    fn get_armor(&self) -> i16 {
+        self.armor
+    }
+
+    fn get_attack(&self) -> i16 {
+        self.attack
+    }
+
+    fn decrease_hp(&mut self, attack: i16) {
+        self.hp -= attack-self.armor;
+    }
+}
+
+pub fn train(name: &str) -> Result<impl Terran, String> {
     match name {
         "vulture" => Ok(Mechanic {
             name: "Vulture".to_string(),
@@ -28,4 +58,18 @@ pub fn train(name: &str) -> Result<Mechanic, String> {
         }),
         _ => Err(String::from("Invalid name")),
     }
+}
+
+pub fn example() {
+    let mut vulture = train("vulture").unwrap();
+    let mut tank = train("tank").unwrap();
+    let mut goliath = train("goliath").unwrap();
+
+    tank.decrease_hp(vulture.get_attack());
+    goliath.decrease_hp(tank.get_attack());
+    vulture.decrease_hp(goliath.get_attack());
+
+    println!("{}: {}", vulture.get_name(), vulture.get_hp());
+    println!("{}: {}", tank.get_name(), tank.get_hp());
+    println!("{}: {}", goliath.get_name(), goliath.get_hp());
 }
