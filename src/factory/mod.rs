@@ -36,6 +36,10 @@ impl Terran for Mechanic {
     }
 }
 
+const VULTURE: &str = "vulture";
+const TANK: &str = "tank";
+const GOLIATH: &str = "goliath";
+
 pub fn train(name: &str) -> Result<impl Terran, String> {
     match name {
         "vulture" => Ok(Mechanic {
@@ -61,9 +65,9 @@ pub fn train(name: &str) -> Result<impl Terran, String> {
 }
 
 pub fn example() {
-    let mut vulture = train("vulture").unwrap();
-    let mut tank = train("tank").unwrap();
-    let mut goliath = train("goliath").unwrap();
+    let mut vulture = train(VULTURE).unwrap();
+    let mut tank = train(TANK).unwrap();
+    let mut goliath = train(GOLIATH).unwrap();
 
     tank.decrease_hp(vulture.get_attack());
     goliath.decrease_hp(tank.get_attack());
