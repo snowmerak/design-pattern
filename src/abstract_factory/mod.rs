@@ -131,10 +131,10 @@ impl Bootcamp for Factory {
     }
 }
 
-pub fn build_bootcamp(name: &str) -> Result<impl Bootcamp, String> {
+pub fn build_bootcamp(name: &str) -> Result<Box<dyn Bootcamp>, String> {
     match name {
-        "barracks" => Ok(Barrack {}),
-        // "factory" => Ok(Factory {}),
+        "barracks" => Ok(Box::new(Barrack {})),
+        "factory" => Ok(Box::new(Factory {})),
         _ => Err("Unknown bootcamp".to_string()),
     }
 }
